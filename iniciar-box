@@ -1,6 +1,6 @@
 #!/bin/bash
 
-cd $HOME/termux-box
+cd $HOME/Box64-Ptbr
 
 if [ ! -e ubuntu-fs/opt/wine ]; then
  wget -q --show-progress https://github.com/Kron4ek/Wine-Builds/releases/download/8.2/wine-8.2-staging-amd64.tar.xz
@@ -8,9 +8,9 @@ if [ ! -e ubuntu-fs/opt/wine ]; then
 fi
 
 if [ ! -e update-timestamp ]; then
- latestupdate=$(curl --connect-timeout 6 -s https://raw.githubusercontent.com/olegos2/termux-box/main/update-timestamp)
+ latestupdate=$(curl --connect-timeout 6 -s https://raw.githubusercontent.com/GabrilXX/TermuxX11-box64-86-Ptbr/main/update-timestamp)
  if [[ "$latestupdate" = "" ]]; then
-  echo "No internet connetion, try again"
+  echo "sem conexão com a internet, tente novamente mais tarde"
   return
  fi
  echo "$latestupdate">update-timestamp
@@ -32,30 +32,30 @@ else echo "$minutes minutes ago"; fi
 
 sleep 0.5
 
-latestupdate=$(curl --connect-timeout 6 -s https://raw.githubusercontent.com/olegos2/termux-box/main/update-timestamp)
+latestupdate=$(curl --connect-timeout 6 -s https://raw.githubusercontent.com/GabrilXX/TermuxX11-box64-86-Ptbr/main/update-timestamp)
 if [[ "$latestupdate" = "" ]]; then
- echo "Could not check for updates"
+ echo "Não foi possível verificar se há atualizações"
 else
  if [ "$timestamp" = "$latestupdate" ]; then
-  echo "termux-box is up to date!"
+ echo "Box64-Ptbr está atualizado!"
  else
-  echo -n "A new patch is available! Do you want to install it? (Y/n) "
+  echo -n "nova atualização disponível! Voce quer instalar ? (Y/n) "
   read sel
   if [ "$sel" = "Y" ] || [ "$sel" = "y" ]; then
-   curl -s -o ~/y https://raw.githubusercontent.com/olegos2/termux-box/main/patch
+   curl -s -o ~/y https://raw.githubusercontent.com/GabrilXX/TermuxX11-box64-86-Ptbr/main/patch
    chmod +x ~/y
    ~/y
-   echo "$latestupdate">~/termux-box/update-timestamp
-   exec $PREFIX/bin/termux-box
+   echo "$latestupdate">~/Box64-Ptbr/update-timestamp
+   exec $PREFIX/bin/iniciar-box
   else
-   echo "Update was not installed"
+   echo "atualização nao foi instalado"
   fi
  fi
 fi
 
 sleep 0.5
 
-cd $HOME/termux-box
+cd $HOME/Box64-Ptbr
 sudo chown -hR $(whoami) ubuntu-fs/root $>/dev/null
 touch ubuntu-fs/root/.hushlogin
 mkdir -p /sdcard/Android/data/com.termux/files/Download &>/dev/null
@@ -64,14 +64,14 @@ rm -rf $PREFIX/tmp/pulse-*
 pulseaudio -k >/dev/null 2>&1
 pulseaudio --start --load="module-native-protocol-tcp auth-ip-acl=127.0.0.1 auth-anonymous=1" --exit-idle-time=-1
 
-mkdir /sdcard/termux-box >/dev/null 2>&1
-cp -n ubuntu-fs/opt/Env.conf /sdcard/termux-box >/dev/null 2>&1
-cp -n ubuntu-fs/opt/dxvk.conf /sdcard/termux-box >/dev/null 2>&1
+mkdir /sdcard/Box64-Ptbr >/dev/null 2>&1
+cp -n ubuntu-fs/opt/Env.conf /sdcard/Box64-Ptbr >/dev/null 2>&1
+cp -n ubuntu-fs/opt/dxvk.conf /sdcard/Box64-Ptbr >/dev/null 2>&1
 negus=$(cat ubuntu-fs/opt/script.conf)
 if [ "$negus" = "" ]; then
  echo ""
  echo "1) Proot"
- echo "2) Chroot (root only)"
+ echo "2) Chroot (root necessário)"
  read oleg
 elif [ "$negus" = "proot" ]; then
  oleg=1
@@ -81,10 +81,10 @@ fi
 case $oleg in
 1)
 echo "proot">ubuntu-fs/opt/script.conf
-if [[ "$(sudo a)" = *"Are you rooted?"* ]]; then
+if [[ "$(sudo a)" = *"Voce possui root?"* ]]; then
  ./start-proot.sh
 else
- echo "Warning! Using proot with root is unstable!"
+ echo "Cuidado! Usando proot com root e instável !"
  sleep 3
  sudo chown -hR root ubuntu-fs/root $>/dev/null
  sudo ./start-proot.sh
@@ -101,7 +101,7 @@ esac
 
 pkill -f "app_process / com.termux.x11"
 
-if [ -e ~/termux-box/ubuntu-fs/opt/restart-termux-box ]; then
- rm -rf ~/termux-box/ubuntu-fs/opt/restart-termux-box
+if [ -e ~/Box64-Ptbr/ubuntu-fs/opt/restart-termux-box ]; then
+rm -rf ~/Box64-Ptbr/ubuntu-fs/opt/restart-termux-box
  exec $0
 fi
