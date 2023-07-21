@@ -3,5 +3,3 @@
 # TermuxX11-box64-86-Ptbr
 Box64_86 rootfs modificado Virgl em Pt-br
 abra o termux e cole o seguinte comando:
-
-`curl -s -o x https://raw.githubusercontent.com/GabrilXX/TermuxX11-box64-86-Ptbr/main/install && chmod +x x && ./x`
