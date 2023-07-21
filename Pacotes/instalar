@@ -2,24 +2,24 @@
 
 cd
 echo ""
-echo "Сlique em permitir para prosseguir"
+echo "Сlique em permitir para prosseguir¡¡"
 termux-setup-storage & sleep 4 &>/dev/null
 while true; do
 if [ -e storage ]; then
-rm -rf /sdcard/Box64-Ptbr
+rm -rf /sdcard/termux-box
 break
 else
-echo "se voce negou a permissão,permita nas configurações do termux agora"
+echo "Se você negou permissão, altere-a manualmente nas configurações do aplicativo termux agora"
 fi
 sleep 1
 done
-mkdir -p /sdcard/Box64-Ptbr
+mkdir -p /sdcard/Box64-start
 pkg clean
 pkg update -y
 pkg upgrade -y
 sleep 2
 echo ""
-echo "Instalando pacotes"
+echo "Instalando pacotes por favor aguarde.."
 pkg install x11-repo -y &>/dev/null
 pkg install pulseaudio -y &>/dev/null
 pkg install xwayland -y &>/dev/null
@@ -27,29 +27,30 @@ pkg install proot -y &>/dev/null
 pkg install wget -y &>/dev/null
 pkg install tsu -y &>/dev/null
 pkg install root-repo -y &>/dev/null
-rm -rf $HOME/Box64-Ptbr
-mkdir -p $HOME/Box64-Ptbr
-cd $HOME/Box64-Ptbr
-wget https://github.com/GabrilXX/TermuxX11-box64-86-Ptbr/releases/download/Package/termux-x11-1.02.07-0-all.deb &>/dev/null
+rm -rf $HOME/Box64-start
+mkdir -p $HOME/Box64-start
+cd $HOME/Box64-start
+wget https https://github.com/GabrilXX/TermuxX11-box64-86-Ptbr/releases/download/Package/termux-x11-1.02.07-0-all.deb
+&>/dev/null
 dpkg -i termux-x11-1.02.07-0-all.deb &>/dev/null
 rm -rf termux-x11-1.02.07-0-all.deb
 
 echo ""
-echo "Baixando rootfs..."
-cd $HOME/Box64-Ptbr
-wget -q --show-progress https://github.com/GabrilXX/TermuxX11-box64-86-Ptbr/releases/download/Package/rootfs.tar.xz
+echo "Baixando uma rootfs pre configurada..."
+cd $HOME/Box64-start
+wget -q --show-progress https https://github.com/GabrilXX/TermuxX11-box64-86-Ptbr/releases/download/Package/rootfs.tar.xz
 
 echo ""
-echo "Descompactando Rootfs aguarde.."
+echo "Descompactando rootfs Rootfs"
 tar -xf rootfs.tar.xz
 rm -rf rootfs.tar.xz
 
-cd $HOME/termux-box/ubuntu-fs/opt
-wget https://github.com/GabrilXX/TermuxX11-box64-86-Ptbr/releases/download/Package/scripts.tar.gz &>/dev/null
+cd $HOME/Box64-start/ubuntu-fs/opt
+wget https https://github.com/GabrilXX/TermuxX11-box64-86-Ptbr/releases/download/Package/scripts.tar.gz &>/dev/null
 tar -xf scripts.tar.gz
 rm -rf scripts.tar.gz
 
-cd $HOME/Box64-Ptbr/
+cd $HOME/Box64-start/
 wget -N https://github.com/GabrilXX/TermuxX11-box64-86-Ptbr/raw/main/iniciar-box &>/dev/null
 chmod +x iniciar-box
 mv iniciar-box $PREFIX/bin/
@@ -58,9 +59,9 @@ wget -N https://github.com/GabrilXX/TermuxX11-box64-86-Ptbr/raw/main/start-chroo
 chmod +x start-proot.sh
 chmod +x start-chroot.sh
 
-echo "Finalizando instalação"
+echo "Finalizando aguarde.."
 
-cd $HOME/Box64-Ptbr/ubuntu-fs
+cd $HOME/Box64-start/ubuntu-fs
 wget -q --show-progress https://github.com/GabrilXX/TermuxX11-box64-86-Ptbr/releases/download/Package/patch.tar.xz
 tar -xf patch.tar.xz
 rm -rf patch.tar.xz
